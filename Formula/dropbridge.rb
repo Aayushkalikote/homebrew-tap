@@ -2,17 +2,25 @@
 class Dropbridge < Formula
   desc "Show Android phones in macOS AirDrop and receive Quick Share on your Mac"
   homepage "https://github.com/Aayushkalikote/DropBridge"
-  url "https://github.com/Aayushkalikote/DropBridge/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "8682142f3df7e7058f9d959936fb945e8c7d7e2f5712c09511b0e7fda89d608d"
+  # Prebuilt universal binary from the GitHub release, so users need no Rust toolchain.
+  url "https://github.com/Aayushkalikote/DropBridge/releases/download/v0.1.0/dropbridge-v0.1.0-macos-universal.tar.gz"
+  sha256 "fb6f1631feab9db8628605f7cd14e15ad58df6937bf861ab6045dfbe9018c6aa"
   license "GPL-3.0-only"
-  head "https://github.com/Aayushkalikote/DropBridge.git", branch: "main"
 
-  depends_on "protobuf" => :build # rqs_lib generates its protocol code with protoc
-  depends_on "rust" => :build
+  head do
+    url "https://github.com/Aayushkalikote/DropBridge.git", branch: "main"
+    depends_on "protobuf" => :build # rqs_lib generates its protocol code with protoc
+    depends_on "rust" => :build
+  end
+
   depends_on :macos
 
   def install
-    system "cargo", "install", *std_cargo_args
+    if build.head?
+      system "cargo", "install", *std_cargo_args
+    else
+      bin.install "dropbridge"
+    end
   end
 
   service do
