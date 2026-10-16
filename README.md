@@ -27,6 +27,9 @@ DropBridge runs as a background service. Start it now and at every login:
 brew services start dropbridge
 ```
 
+> [!IMPORTANT]
+> Install DropBridge with Homebrew only. The files on the [Releases](https://github.com/Aayushkalikote/DropBridge/releases) page are for Homebrew to download. macOS blocks the `dropbridge` binary if you download it in a browser, because Apple has not signed it yet. If you already downloaded it, unblock it with `xattr -d com.apple.quarantine dropbridge`.
+
 ## Update
 
 ```sh
